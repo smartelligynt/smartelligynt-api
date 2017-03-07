@@ -17,10 +17,10 @@ https://docs.docker.com/v1.13/docker-for-mac/install/
 ```$ docker images```
 
 ####Test docker image locally
-````$ docker run -p 8080:8080 -t smartelligynt/smartelligynt-api````
+```$ docker run -p 8080:8080 -t smartelligynt/smartelligynt-api```
 
 ####Confirm by curl or in browser
-```$ curl localhost:8080/api/````
+```$ curl localhost:8080/api/```
 
 ￼####Lets push newly created and successfully tested image to docker hub
 
@@ -29,7 +29,7 @@ https://docs.docker.com/v1.13/docker-for-mac/install/
 login : smartelligynt
 pwd : pwd is on messenger
 
-```$ docker login````
+```$ docker login```
 
 ####Push newly created image to public docker hub
 ```$ docker push smartelligynt/smartelligynt-api```
