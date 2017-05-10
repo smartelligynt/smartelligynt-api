@@ -64,20 +64,19 @@ Cannot connect to the Docker daemon at unix:///var/run/docker.sock. Is the docke
 ```
 http://stackoverflow.com/questions/21871479/docker-cant-connect-to-docker-daemon
 
-Check if you've docker-machine by:
+* Check if you've docker-machine by:
   `$ docker-machine --version`
-docker-machine version 0.5.1 (HEAD)
-If not, install machine binary via - OS X
+* If not, install machine binary via - OS X
 	•	install via Brew: `brew install docker-machine`
 	•	manually:`install -v <(curl https://github.com/docker/machine/releases/download/v0.5.3/docker-machine_linux-amd64) /usr/local/bin/docker-machine`
 
-Then you need to create default machine (if you don't have one):
+* Then you need to create default machine (if you don't have one):
   `docker-machine create --driver virtualbox default`
-Or check if already exists:
+* Or check if already exists:
   `docker-machine ls`
-Set-up the environment for the Docker client:
+* Set-up the environment for the Docker client:
   `eval "$(docker-machine env default)"`
-Then double-check by listing containers:
+* Then double-check by listing containers:
   `docker ps`
 
 ```
