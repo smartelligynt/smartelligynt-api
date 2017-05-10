@@ -1,7 +1,7 @@
 # smartelligynt-api
 
 
-####Install docker image on your machine
+###Install docker image on your machine
 https://docs.docker.com/v1.13/docker-for-mac/install/
 
 
