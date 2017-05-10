@@ -6,14 +6,12 @@ https://docs.docker.com/v1.13/docker-for-mac/install/
 * Take latest code from github and do mvn build
 ```
 $ mvn clean install
-
 ```
 
 
 * On successful build build docker image
 ```
 $ mvn package docker:build
-
 ```
 
 
@@ -42,13 +40,11 @@ pwd : pwd is on messenger
 
 ```
 $ docker login
-
 ```
 
 * Push newly created image to public docker hub
 ```
 $ docker push smartelligynt/smartelligynt-api
-
 ```
 
 
