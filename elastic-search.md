@@ -1,4 +1,4 @@
-##Schema##
+## Schema
 
 /index/type/doc-id
 
@@ -6,7 +6,7 @@
 * Within an index, you can define one or more types. A type is a logical category/partition of your index. In general, a type is defined for documents that have a set of common fields. 
 * A document is a basic unit of information that can be indexed.
 
-###Users###
+### Users
 
 ```
 PUT
@@ -21,7 +21,7 @@ POST
 
 ```
 
-###Devices###
+### Devices
 
 ```
 PUT
@@ -37,7 +37,7 @@ POST
 }
 ```
 
-###Events###
+### Events
 ```
 PUT
 /events
@@ -50,9 +50,26 @@ POST
 {"en" : “TV ONFF event”, "ev" : “1”, "et" : 1002, "eu" : "ONOFF"}
 {"en" : “TV power event”, "ev" : “100”, "et" : 1007, "eu" : “watts”}
 
+POST
+/devices/b32f6cec-454c-44e1-971c-f4a38eb5ce9f/788b1dd9-b005-46f6-b22a-c36ca589e1bb
+{
+  “name”: "Main Door",
+  “desc”: "Main Door activity",
+  “type”: "DoorSensor",
+  "unit" : "ONOFF"
+}
+
+POST /devices/b32f6cec-454c-44e1-971c-f4a38eb5ce9f/6667254a-5581-4f06-9d4d-f3cd8a8c96be
+{
+  "name": "Back Door",
+  "desc": "Back Door activity",
+  "type": "DoorSensor",
+  "unit" : "ONOFF"
+}
+
 ```
 
-###Charts###
+### Charts
 
 ```
 PUT
@@ -83,6 +100,86 @@ POST
         "type": "number",
         "label": "ON-OFF"
       }
+    }
+}
+
+POST /charts/b32f6cec-454c-44e1-971c-f4a38eb5ce9f
+{
+     "type": "state",
+    "resourceUrl": "788b1dd9-b005-46f6-b22a-c36ca589e1bb",
+    "etype" : "ONOFF",
+    "color": "#2f4f4f",
+    "x": {
+      "attr": {
+        "name": "timestamp",
+        "type": "time",
+        "label": "DateTime"
+      },
+      "interval": "ss"
+    },
+    "y": {
+      "attr": {
+        "name": "ev",
+        "type": "number",
+        "label": "Status"
+      }
+    }
+
+}
+
+POST /charts/b32f6cec-454c-44e1-971c-f4a38eb5ce9f
+{
+     "type": "state",
+    "resourceUrl": "6667254a-5581-4f06-9d4d-f3cd8a8c96be",
+    "etype" : "ONOFF",
+    "color": "##ff7f0e",
+    "x": {
+      "attr": {
+        "name": "timestamp",
+        "type": "time",
+        "label": "DateTime"
+      },
+      "interval": "ss"
+    },
+    "y": {
+      "attr": {
+        "name": "ev",
+        "type": "number",
+        "label": "Status"
+      }
+    }
+
+}
+```
+## Search
+
+```
+https://search-smartelligyntes-zfnjlomb5dgk7gwbziwkvtkglq.us-west-2.es.amazonaws.com/events/_search
+{
+    "query": {
+        "constant_score" : {
+            "filter" : {
+            	"bool" : {
+            		"must" : [
+            		
+                         {"match" : { "_type" : "aa7c1b06-b243-4f6a-9820-f2e0c12be170" }} ,
+                         {"match" : { "eu" : "ONOFF" }},
+                         {
+                         	"range" : 
+                         	{
+        							 "et" : 
+        							 {
+            							 "gte": "1002",
+                						 "lte": "1003"
+					                
+        							 }
+        					}
+                         }
+            		]
+            	}
+                 
+            }
+        }
     }
 }
 ```
