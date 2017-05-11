@@ -101,3 +101,11 @@ export DOCKER_MACHINE_NAME="default"
 $ eval $(docker-machine env)
 
 ```
+* Check logs
+```
+To see last 1000 lines
+$docker logs --tail 1000 <container id>
+
+To tail logs
+$docker logs -f <container id>
+```
