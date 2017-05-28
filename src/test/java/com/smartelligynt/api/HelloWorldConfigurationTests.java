@@ -17,6 +17,10 @@ package com.smartelligynt.api;
 
 import static org.junit.Assert.assertEquals;
 
+import java.sql.Connection;
+import java.sql.DriverManager;
+import java.sql.SQLException;
+
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -28,6 +32,10 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.test.annotation.DirtiesContext;
 import org.springframework.test.context.junit4.SpringRunner;
+
+import com.smartelligynt.api.model.Device;
+import com.smartelligynt.api.model.Event;
+import com.smartelligynt.api.model.User;
 
 @RunWith(SpringRunner.class)
 @SpringBootTest(webEnvironment = WebEnvironment.RANDOM_PORT)
@@ -49,13 +57,62 @@ public class HelloWorldConfigurationTests {
     
     @Test
     public void testEvents() throws Exception {
-        Events events = new Events();
+        Event events = new Event();
         events.setEn("eventname");
-        events.setEt(100000);
+        events.setEt("100000");
         events.setEv("eventValue");
+        events.setEu("WATTS");
         ResponseEntity<String> entity = 
-        		restTemplate.postForEntity("http://localhost:" + this.port + "/api/events", events, String.class);
+        		restTemplate.postForEntity("http://localhost:" + this.port + "/api/aa7c1b06-b243-4f6a-9820-f2e0c12be170/events/", events, String.class);
+        
+        System.out.println("event saved " + entity.getBody());
         assertEquals(HttpStatus.OK, entity.getStatusCode());
     }
+    
+    @Test
+    public void testDevice() throws Exception {
+        Device device = new Device();
+        device.setName("A device name");
+        device.setType("a device type");
+        device.setDesc("a device desc");
+        device.setUnit("a device unit");
+        
+        ResponseEntity<String> entity = 
+        		restTemplate.postForEntity("http://localhost:" + this.port + "/api/users/b32f6cec-454c-44e1-971c-f4a38eb5ce9f/devices/aa7c1b06-b243-4f6a-9820-f2e0c12be170", device, String.class);
+        
+        System.out.println("device saved " + entity.getBody());
+        assertEquals(HttpStatus.OK, entity.getStatusCode());
+    }
+    
+    @Test
+    public void testDevice2() throws Exception {
+        Device device = new Device();
+        device.setName("A device name");
+        device.setType("a device type");
+        device.setDesc("a device desc");
+        device.setUnit("a device unit");
+        
+        ResponseEntity<String> entity = 
+        		restTemplate.postForEntity("http://localhost:" + this.port + "/api/users/b32f6cec-454c-44e1-971c-f4a38eb5ce9f/devices/userDefinedDeviceId1", device, String.class);
+        
+        System.out.println("device2 saved " + entity.getBody());
+        assertEquals(HttpStatus.OK, entity.getStatusCode());
+    }
+    
+    
+    
+    @Test
+    public void testUser() throws Exception {
+        User user = new User();
+        user.setName("a user name");
+        
+        ResponseEntity<String> entity = 
+        		restTemplate.postForEntity("http://localhost:" + this.port + "/api/users", user, String.class);
+        
+        System.out.println("user saved " + entity.getBody());
+        assertEquals(HttpStatus.OK, entity.getStatusCode());
+    }
+    
+   
 
 }
