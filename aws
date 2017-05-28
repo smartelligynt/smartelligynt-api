@@ -1,1 +1,4 @@
 ssh -o "StrictHostKeyChecking no" -i "aws-ec2.pem" ec2-user@52.26.71.168
+/usr/bin/docker-proxy -proto tcp -host-ip 0.0.0.0 -host-port 8082 -container-ip 172.17.0.3 -container-port 3000
+/usr/bin/docker-proxy -proto tcp -host-ip 0.0.0.0 -host-port 8081 -container-ip 172.17.0.2 -container-port 8080
+/usr/bin/docker-proxy -proto tcp -host-ip 0.0.0.0 -host-port 8083 -container-ip 172.17.0.4 -container-port 8080
