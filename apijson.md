@@ -3,6 +3,7 @@ API URL and JSON format
 ### URL  : /users
 ### Payload :
 
+```
 {
   "emailId": "myemail@gmail.com",
   "name": "a user name",
@@ -31,3 +32,4 @@ API URL and JSON format
     ]
   }
 }
+```
