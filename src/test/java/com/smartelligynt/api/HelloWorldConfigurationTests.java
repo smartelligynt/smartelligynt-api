@@ -20,6 +20,11 @@ import static org.junit.Assert.assertEquals;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.SQLException;
+import java.util.ArrayList;
+import java.util.Date;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -33,6 +38,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.test.annotation.DirtiesContext;
 import org.springframework.test.context.junit4.SpringRunner;
 
+import com.smartelligynt.api.model.Authentication;
 import com.smartelligynt.api.model.Device;
 import com.smartelligynt.api.model.Event;
 import com.smartelligynt.api.model.User;
@@ -105,6 +111,30 @@ public class HelloWorldConfigurationTests {
     public void testUser() throws Exception {
         User user = new User();
         user.setName("a user name");
+        user.setEmailId("myemail@gmail.com");
+        user.setLocation("japan");
+        Authentication auth = new Authentication();
+        auth.setAppName("wink");
+        auth.setAppUserId("winkuserid");
+        auth.setCreatedTime(new Date().toString());
+        auth.setExpiryTime(new Date().toString());
+        auth.setRefreshToken("REF-TOKEN");
+        auth.setShortLivedToken("SHORT-TOKEN");
+        auth.setLastAccessTime(new Date().toString());
+        Authentication auth1 = new Authentication();
+        auth1.setAppName("wink1");
+        auth1.setAppUserId("winkuserid1");
+        auth1.setCreatedTime(new Date().toString());
+        auth1.setExpiryTime(new Date().toString());
+        auth1.setRefreshToken("REF-TOKEN-1");
+        auth1.setShortLivedToken("SHORT-TOKE-1");
+        auth1.setLastAccessTime(new Date().toString());
+        List<Authentication> lst= new ArrayList<>();
+        lst.add(auth);
+        lst.add(auth1);
+        Map<String, List<Authentication>> mp = new HashMap<>();
+        mp.put("wink", lst);
+        user.setToken(mp);
         
         ResponseEntity<String> entity = 
         		restTemplate.postForEntity("http://localhost:" + this.port + "/api/users", user, String.class);

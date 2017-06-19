@@ -72,23 +72,22 @@ public class EventReciever {
     }
     
     @RequestMapping(value="/users", method = RequestMethod.POST)
-	    public String users(  HttpServletRequest request) throws IOException {
-    	InputStream inputStream  = request.getInputStream();
-    	int ch;
-    	StringBuilder sb = new StringBuilder();
-    	while((ch = inputStream.read()) != -1)
-    	    sb.append((char)ch);
+	    public String users(@RequestBody User user) throws IOException {
+//    	InputStream inputStream  = request.getInputStream();
+//    	int ch;
+//    	StringBuilder sb = new StringBuilder();
+//    	while((ch = inputStream.read()) != -1)
+//    	    sb.append((char)ch);
+//    	
+//    	System.out.println( sb.toString());
     	
-    	System.out.println( sb.toString());
-    	
-    	//String val = esStorage.saveUser(null, user);
+    	String val = esStorage.saveUser(null, user);
     	System.out.println("$$$$####################################################################################################");
-        return "";
+        return val;
     }
     
     @RequestMapping(value="/users/{userId}", method = RequestMethod.POST)
-    public String users(@PathVariable String userId,  @RequestBody User user, HttpServletRequest request) {
-    	System.out.println("---" + request);
+    public String users(@PathVariable String userId,  @RequestBody User user) {
     	String val = esStorage.saveUser(userId, user);
     	System.out.println("$$$#####################################################################################################");
         return val;
