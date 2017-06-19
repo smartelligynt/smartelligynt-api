@@ -63,7 +63,7 @@ public class HelloWorldConfigurationTests {
         events.setEv("eventValue");
         events.setEu("WATTS");
         ResponseEntity<String> entity = 
-        		restTemplate.postForEntity("http://localhost:" + this.port + "/api/aa7c1b06-b243-4f6a-9820-f2e0c12be170/events/", events, String.class);
+        		restTemplate.postForEntity("http://localhost:" + this.port + "/api/users/b32f6cec-454c-44e1-971c-f4a38eb5ce9f/devices/aa7c1b06-b243-4f6a-9820-f2e0c12be170/events/", events, String.class);
         
         System.out.println("event saved " + entity.getBody());
         assertEquals(HttpStatus.OK, entity.getStatusCode());

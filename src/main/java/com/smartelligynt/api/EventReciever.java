@@ -1,9 +1,19 @@
 package com.smartelligynt.api;
 
+import java.io.BufferedReader;
+import java.io.IOException;
+import java.io.InputStream;
+import java.io.StringWriter;
+import java.nio.charset.StandardCharsets;
+
+import javax.servlet.http.HttpServletRequest;
+
+import org.apache.tomcat.util.http.fileupload.IOUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
+import org.springframework.core.io.ByteArrayResource;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -22,11 +32,11 @@ public class EventReciever {
 
     private Storage esStorage = new ESStorage();
 	
-//    @Autowired
-//    @Qualifier("esstorage")
-//	public void setEventStorageor(EventStorage eventStorageor) {
-//		this.eventStorageor = eventStorageor;
-//	}
+    //@Autowired
+    //@Qualifier("esstorage")
+	public void setEventStorageor(Storage eventStorageor) {
+		this.esStorage = eventStorageor;
+	}
 
 	@RequestMapping("/")
     public String home() {
@@ -62,16 +72,25 @@ public class EventReciever {
     }
     
     @RequestMapping(value="/users", method = RequestMethod.POST)
-    public String users( @RequestBody User user) {
-    	String val = esStorage.saveUser(null, user);
-    	System.out.println("######################################################################################################");
-        return val;
+	    public String users(  HttpServletRequest request) throws IOException {
+    	InputStream inputStream  = request.getInputStream();
+    	int ch;
+    	StringBuilder sb = new StringBuilder();
+    	while((ch = inputStream.read()) != -1)
+    	    sb.append((char)ch);
+    	
+    	System.out.println( sb.toString());
+    	
+    	//String val = esStorage.saveUser(null, user);
+    	System.out.println("$$$$####################################################################################################");
+        return "";
     }
     
     @RequestMapping(value="/users/{userId}", method = RequestMethod.POST)
-    public String users( @PathVariable String userId,  @RequestBody User user) {
+    public String users(@PathVariable String userId,  @RequestBody User user, HttpServletRequest request) {
+    	System.out.println("---" + request);
     	String val = esStorage.saveUser(userId, user);
-    	System.out.println("######################################################################################################");
+    	System.out.println("$$$#####################################################################################################");
         return val;
     }
     //return all user information & all devices & all chart information
