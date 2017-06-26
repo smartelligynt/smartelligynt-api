@@ -6,10 +6,11 @@ import java.util.Map;
 
 public class User {
 	
+	private String userId;
 	private String emailId;
 	private String name;
 	private String timeZone;
-	private String location; //address long lat home address billing address
+	private Location location; //address long lat home address billing address
 	
 	//key app name
 	private Map <String,List<Authentication>> tokens = new HashMap<>();
@@ -43,11 +44,11 @@ public class User {
 		this.timeZone = timeZone;
 	}
 
-	public String getLocation() {
+	public Location getLocation() {
 		return location;
 	}
 
-	public void setLocation(String location) {
+	public void setLocation(Location location) {
 		this.location = location;
 	}
 
@@ -57,6 +58,14 @@ public class User {
 
 	public void setToken(Map<String, List<Authentication>> token) {
 		this.tokens = token;
+	}
+
+	public String getUserId() {
+		return userId;
+	}
+
+	public void setUserId(String userId) {
+		this.userId = userId;
 	}
 
 

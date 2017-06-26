@@ -39,8 +39,10 @@ import org.springframework.test.annotation.DirtiesContext;
 import org.springframework.test.context.junit4.SpringRunner;
 
 import com.smartelligynt.api.model.Authentication;
+import com.smartelligynt.api.model.BaseResponse;
 import com.smartelligynt.api.model.Device;
 import com.smartelligynt.api.model.Event;
+import com.smartelligynt.api.model.Location;
 import com.smartelligynt.api.model.User;
 
 @RunWith(SpringRunner.class)
@@ -62,57 +64,15 @@ public class HelloWorldConfigurationTests {
     }
     
     @Test
-    public void testEvents() throws Exception {
-        Event events = new Event();
-        events.setEn("eventname");
-        events.setEt("100000");
-        events.setEv("eventValue");
-        events.setEu("WATTS");
-        ResponseEntity<String> entity = 
-        		restTemplate.postForEntity("http://localhost:" + this.port + "/api/users/b32f6cec-454c-44e1-971c-f4a38eb5ce9f/devices/aa7c1b06-b243-4f6a-9820-f2e0c12be170/events/", events, String.class);
-        
-        System.out.println("event saved " + entity.getBody());
-        assertEquals(HttpStatus.OK, entity.getStatusCode());
-    }
-    
-    @Test
-    public void testDevice() throws Exception {
-        Device device = new Device();
-        device.setName("A device name");
-        device.setType("a device type");
-        device.setDesc("a device desc");
-        device.setUnit("a device unit");
-        
-        ResponseEntity<String> entity = 
-        		restTemplate.postForEntity("http://localhost:" + this.port + "/api/users/b32f6cec-454c-44e1-971c-f4a38eb5ce9f/devices/aa7c1b06-b243-4f6a-9820-f2e0c12be170", device, String.class);
-        
-        System.out.println("device saved " + entity.getBody());
-        assertEquals(HttpStatus.OK, entity.getStatusCode());
-    }
-    
-    @Test
-    public void testDevice2() throws Exception {
-        Device device = new Device();
-        device.setName("A device name");
-        device.setType("a device type");
-        device.setDesc("a device desc");
-        device.setUnit("a device unit");
-        
-        ResponseEntity<String> entity = 
-        		restTemplate.postForEntity("http://localhost:" + this.port + "/api/users/b32f6cec-454c-44e1-971c-f4a38eb5ce9f/devices/userDefinedDeviceId1", device, String.class);
-        
-        System.out.println("device2 saved " + entity.getBody());
-        assertEquals(HttpStatus.OK, entity.getStatusCode());
-    }
-    
-    
-    
-    @Test
-    public void testUser() throws Exception {
+    public void testUserWithId() throws Exception {
         User user = new User();
+        user.setUserId("b32f6cec-454c-44e1-971c-f4a38eb5ce9f");
         user.setName("a user name");
         user.setEmailId("myemail@gmail.com");
-        user.setLocation("japan");
+        Location loc = new Location();
+        loc.setLongitude("-1.4566");
+        loc.setLatitude("0.64885");
+        user.setLocation(loc);
         Authentication auth = new Authentication();
         auth.setAppName("wink");
         auth.setAppUserId("winkuserid");
@@ -136,10 +96,96 @@ public class HelloWorldConfigurationTests {
         mp.put("wink", lst);
         user.setToken(mp);
         
-        ResponseEntity<String> entity = 
-        		restTemplate.postForEntity("http://localhost:" + this.port + "/api/users", user, String.class);
+        ResponseEntity<BaseResponse> entity = 
+        		restTemplate.postForEntity("http://localhost:" + this.port + "/api/users/b32f6cec-454c-44e1-971c-f4a38eb5ce9f", user, BaseResponse.class);
         
-        System.out.println("user saved " + entity.getBody());
+        System.out.println("user saved " + entity.getBody().getId());
+        assertEquals(HttpStatus.OK, entity.getStatusCode());
+    }
+    
+    
+    @Test
+    public void testEvents() throws Exception {
+        Event events = new Event();
+        events.setEn("eventname");
+        events.setEt("100000");
+        events.setEv("eventValue");
+        events.setEu("WATTS");
+        ResponseEntity<BaseResponse> entity = 
+        		restTemplate.postForEntity("http://localhost:" + this.port + "/api/users/b32f6cec-454c-44e1-971c-f4a38eb5ce9f/devices/aa7c1b06-b243-4f6a-9820-f2e0c12be170/events/", events, BaseResponse.class);
+        
+        System.out.println("event saved " + entity.getBody().getId());
+        assertEquals(HttpStatus.OK, entity.getStatusCode());
+    }
+    
+    @Test
+    public void testDevice() throws Exception {
+        Device device = new Device();
+        device.setName("A device name");
+        device.setType("a device type");
+        device.setDesc("a device desc");
+        device.setUnit("a device unit");
+        
+        ResponseEntity<BaseResponse> entity = 
+        		restTemplate.postForEntity("http://localhost:" + this.port + "/api/users/b32f6cec-454c-44e1-971c-f4a38eb5ce9f/devices/aa7c1b06-b243-4f6a-9820-f2e0c12be170", device, BaseResponse.class);
+        
+        System.out.println("device saved " + entity.getBody().getId());
+        assertEquals(HttpStatus.OK, entity.getStatusCode());
+    }
+    
+    @Test
+    public void testDevice2() throws Exception {
+        Device device = new Device();
+        device.setName("A device name");
+        device.setType("a device type");
+        device.setDesc("a device desc");
+        device.setUnit("a device unit");
+        
+        ResponseEntity<BaseResponse> entity = 
+        		restTemplate.postForEntity("http://localhost:" + this.port + "/api/users/b32f6cec-454c-44e1-971c-f4a38eb5ce9f/devices/userDefinedDeviceId1", device, BaseResponse.class);
+        
+        System.out.println("device2 saved " + entity.getBody().getId());
+        assertEquals(HttpStatus.OK, entity.getStatusCode());
+    }
+    
+    
+    
+    @Test
+    public void testUser() throws Exception {
+        User user = new User();
+        user.setName("a user name");
+        user.setEmailId("myemail@gmail.com");
+        Location loc = new Location();
+        loc.setLongitude("-1.4566");
+        loc.setLatitude("0.64885");
+        user.setLocation(loc);
+        Authentication auth = new Authentication();
+        auth.setAppName("wink");
+        auth.setAppUserId("winkuserid");
+        auth.setCreatedTime(new Date().toString());
+        auth.setExpiryTime(new Date().toString());
+        auth.setRefreshToken("REF-TOKEN");
+        auth.setShortLivedToken("SHORT-TOKEN");
+        auth.setLastAccessTime(new Date().toString());
+        Authentication auth1 = new Authentication();
+        auth1.setAppName("wink1");
+        auth1.setAppUserId("winkuserid1");
+        auth1.setCreatedTime(new Date().toString());
+        auth1.setExpiryTime(new Date().toString());
+        auth1.setRefreshToken("REF-TOKEN-1");
+        auth1.setShortLivedToken("SHORT-TOKE-1");
+        auth1.setLastAccessTime(new Date().toString());
+        List<Authentication> lst= new ArrayList<>();
+        lst.add(auth);
+        lst.add(auth1);
+        Map<String, List<Authentication>> mp = new HashMap<>();
+        mp.put("wink", lst);
+        user.setToken(mp);
+        
+        ResponseEntity<BaseResponse> entity = 
+        		restTemplate.postForEntity("http://localhost:" + this.port + "/api/users", user, BaseResponse.class);
+        
+        System.out.println("user saved " + entity.getBody().getId());
         assertEquals(HttpStatus.OK, entity.getStatusCode());
     }
     

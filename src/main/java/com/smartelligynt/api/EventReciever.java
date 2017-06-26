@@ -14,12 +14,14 @@ import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.core.io.ByteArrayResource;
+import org.springframework.http.HttpRequest;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.smartelligynt.api.model.BaseResponse;
 import com.smartelligynt.api.model.Device;
 import com.smartelligynt.api.model.Event;
 import com.smartelligynt.api.model.User;
@@ -57,22 +59,24 @@ public class EventReciever {
     }
     
     @RequestMapping(value="/users/{userId}/devices/{deviceId}/events", method = RequestMethod.POST)
-    public String events(@PathVariable String deviceId,  @RequestBody Event event) {
-    	String val = esStorage.saveEvent(deviceId, event);
-    	System.out.println("######################################################################################################");
-        return val;
+    public BaseResponse events(@PathVariable String deviceId,  @RequestBody Event event) {
+    	StorageResponse val = esStorage.saveEvent(deviceId, event);
+    	BaseResponse response = new BaseResponse();
+    	response.setId(val.get_id());
+        return response;
     }
     
     
     @RequestMapping(value="/users/{userId}/devices/{deviceId}", method = RequestMethod.POST)
-    public String devices(@PathVariable String userId, @PathVariable String deviceId,  @RequestBody Device device) {
-    	String val = esStorage.saveDevice(userId, deviceId, device);
-    	System.out.println("######################################################################################################");
-        return val;
+    public BaseResponse devices(@PathVariable String userId, @PathVariable String deviceId,  @RequestBody Device device) {
+    	StorageResponse val = esStorage.saveDevice(userId, deviceId, device);
+    	BaseResponse response = new BaseResponse();
+    	response.setId(val.get_id());
+        return response;
     }
     
     @RequestMapping(value="/users", method = RequestMethod.POST)
-	    public String users(@RequestBody User user) throws IOException {
+	public BaseResponse users(@RequestBody User user) throws IOException {
 //    	InputStream inputStream  = request.getInputStream();
 //    	int ch;
 //    	StringBuilder sb = new StringBuilder();
@@ -81,16 +85,18 @@ public class EventReciever {
 //    	
 //    	System.out.println( sb.toString());
     	
-    	String val = esStorage.saveUser(null, user);
-    	System.out.println("$$$$####################################################################################################");
-        return val;
+    	StorageResponse val = esStorage.saveUser(null, user);
+    	BaseResponse response = new BaseResponse();
+    	response.setId(val.get_id());
+        return response;
     }
     
     @RequestMapping(value="/users/{userId}", method = RequestMethod.POST)
-    public String users(@PathVariable String userId,  @RequestBody User user) {
-    	String val = esStorage.saveUser(userId, user);
-    	System.out.println("$$$#####################################################################################################");
-        return val;
+    public BaseResponse users(@PathVariable String userId,  @RequestBody User user) {
+    	StorageResponse val = esStorage.saveUser(userId, user);
+    	BaseResponse response = new BaseResponse();
+    	response.setId(val.get_id());
+        return response;
     }
     //return all user information & all devices & all chart information
 //    @RequestMapping(value="/users/{emailId}", method = RequestMethod.GET)

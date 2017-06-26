@@ -23,44 +23,48 @@ public class ESStorage implements Storage {
 	private String DEVICE_URL = "devices/";
 	private String USER_URL = "users/user/";
 
-	public String save(ProcessedEvent event) {
+	public StorageResponse save(ProcessedEvent event) {
 		// TODO Auto-generated method stub
-		ResponseEntity<Object> entiry = restTemplate.postForEntity(BASE_ES_URL + EVENT_URL, event, Object.class);
+		ResponseEntity<StorageResponse> entiry = restTemplate.postForEntity(BASE_ES_URL + EVENT_URL, event, StorageResponse.class);
 		if (entiry.getStatusCode().is2xxSuccessful()) {
-			return "ok";
+			return entiry.getBody();
 		}
-		return "error";
+		return null;
 	}
 
 	@Override
-	public String saveEvent(String deviceId, Event event) {
-		ResponseEntity<Object> entiry = restTemplate.postForEntity(BASE_ES_URL + EVENT_URL + deviceId, event, Object.class);
+	public StorageResponse saveEvent(String deviceId, Event event) {
+		ResponseEntity<StorageResponse> entiry = restTemplate.postForEntity(BASE_ES_URL + EVENT_URL + deviceId, event, StorageResponse.class);
 		if (entiry.getStatusCode().is2xxSuccessful()) {
-			return "ok";
+			return entiry.getBody();
 		}
-		return "error";
+		return null;
 	}
 
 	@Override
-	public String saveDevice(String userId, String deviceId, Device device) {
-		ResponseEntity<Object> entiry = restTemplate.postForEntity(BASE_ES_URL + DEVICE_URL + userId + "/" + deviceId, device, Object.class);
+	public StorageResponse saveDevice(String userId, String deviceId, Device device) {
+		ResponseEntity<StorageResponse> entiry = restTemplate.postForEntity(BASE_ES_URL + DEVICE_URL + userId + "/" + deviceId, device, StorageResponse.class);
 		if (entiry.getStatusCode().is2xxSuccessful()) {
-			return "ok";
+			return entiry.getBody();
 		}
-		return "error";
+		return null;
 	}
 
 	@Override
-	public String saveUser(String userId, User user) {
+	public StorageResponse saveUser(String userId, User user) {
+		
 		if (userId == null || userId.isEmpty())
 		{
 			userId = UUID.randomUUID().toString();
+			user.setUserId(userId);
+
 		}
-		ResponseEntity<Object> entiry = restTemplate.postForEntity(BASE_ES_URL + USER_URL + "/" + userId, user, Object.class);
+		ResponseEntity<StorageResponse> entiry = restTemplate.postForEntity(BASE_ES_URL + USER_URL  + userId, user, StorageResponse.class);
+		
 		if (entiry.getStatusCode().is2xxSuccessful()) {
-			return "ok";
+			return entiry.getBody();
 		}
-		return "error";
+		return null;
 	}
 
 }
