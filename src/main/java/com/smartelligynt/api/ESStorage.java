@@ -4,11 +4,11 @@ import java.util.UUID;
 
 import javax.annotation.Resource;
 
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
-import org.springframework.stereotype.Component;
 import org.springframework.web.client.RestTemplate;
 
+import com.fasterxml.jackson.databind.ObjectMapper;
+import com.fasterxml.jackson.databind.SerializationFeature;
 import com.smartelligynt.api.model.Device;
 import com.smartelligynt.api.model.Event;
 import com.smartelligynt.api.model.User;
@@ -16,6 +16,7 @@ import com.smartelligynt.api.model.User;
 @Resource(name="esstorage")
 public class ESStorage implements Storage {
 
+	
 	//@Autowired
 	public RestTemplate restTemplate = new RestTemplate();
 	private String BASE_ES_URL = "https://search-smartelligyntes-zfnjlomb5dgk7gwbziwkvtkglq.us-west-2.es.amazonaws.com/";
@@ -60,11 +61,24 @@ public class ESStorage implements Storage {
 
 		}
 		ResponseEntity<StorageResponse> entiry = restTemplate.postForEntity(BASE_ES_URL + USER_URL  + userId, user, StorageResponse.class);
-		
+
 		if (entiry.getStatusCode().is2xxSuccessful()) {
 			return entiry.getBody();
 		}
 		return null;
 	}
 
+	@Override
+	public GetUserResponse getUser(String userId) {
+
+		ObjectMapper objectMapper = new ObjectMapper();
+		objectMapper.enable(SerializationFeature.INDENT_OUTPUT);
+		
+		if (userId == null || userId.isEmpty())
+		{
+			return null;
+		}
+		ResponseEntity<GetUserResponse> entiry = restTemplate.getForEntity(BASE_ES_URL + USER_URL  + userId, GetUserResponse.class);
+		return entiry.getBody();
+	}
 }

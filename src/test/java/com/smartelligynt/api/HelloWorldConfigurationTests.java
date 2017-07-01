@@ -98,9 +98,15 @@ public class HelloWorldConfigurationTests {
         
         ResponseEntity<BaseResponse> entity = 
         		restTemplate.postForEntity("http://localhost:" + this.port + "/api/users/b32f6cec-454c-44e1-971c-f4a38eb5ce9f", user, BaseResponse.class);
-        
         System.out.println("user saved " + entity.getBody().getId());
         assertEquals(HttpStatus.OK, entity.getStatusCode());
+        
+        ResponseEntity<User> responseEntity = restTemplate.getForEntity("http://localhost:" + this.port + "/api/users/b32f6cec-454c-44e1-971c-f4a38eb5ce9f", User.class);
+        System.out.println("user retreived " + entity.getBody().getId());
+        assertEquals(HttpStatus.OK, responseEntity.getStatusCode());
+        assertEquals(user.getEmailId(), responseEntity.getBody().getEmailId());
+        assertEquals(user.getName(), responseEntity.getBody().getName());
+        assertEquals(user.getUserId(), responseEntity.getBody().getUserId());
     }
     
     

@@ -98,6 +98,13 @@ public class EventReciever {
     	response.setId(val.get_id());
         return response;
     }
+
+    
+    @RequestMapping(value="/users/{userId}", method = RequestMethod.GET)
+    public User users(@PathVariable String userId) {
+    	GetUserResponse val = esStorage.getUser(userId);
+        return val.getUser();
+    }
     //return all user information & all devices & all chart information
 //    @RequestMapping(value="/users/{emailId}", method = RequestMethod.GET)
 //    public String usersByEmailId( @PathVariable String emailId,  @RequestBody User user) {
