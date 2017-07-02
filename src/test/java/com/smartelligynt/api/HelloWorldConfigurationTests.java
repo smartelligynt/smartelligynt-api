@@ -234,19 +234,27 @@ public class HelloWorldConfigurationTests {
         Authentication auth = new Authentication();
         auth.setAppName("sthing");
         auth.setAppUserId("sthingid");
-        auth.setCreatedTime(new Date().toString());
-        auth.setExpiryTime(new Date().toString());
-        auth.setRefreshToken("REF-TOKEN");
-        auth.setShortLivedToken("SHORT-TOKEN");
-        auth.setLastAccessTime(new Date().toString());
+        auth.setCreatedTime(new Date());
+        auth.setExpiryTime(new Date());
+        auth.setRefreshToken(new Token());
+        auth.getRefreshToken().setValue("REF-TOKEN-1");
+
+        auth.setShortLivedToken(new Token());
+        auth.getShortLivedToken().setValue("SHORT-TOKEN");
+
+        auth.setLastAccessTime(new Date());
         Authentication auth1 = new Authentication();
         auth1.setAppName("sthing");
         auth1.setAppUserId("sthingid");
-        auth1.setCreatedTime(new Date().toString());
-        auth1.setExpiryTime(new Date().toString());
-        auth1.setRefreshToken("REF-TOKEN-1");
-        auth1.setShortLivedToken("SHORT-TOKE-1");
-        auth1.setLastAccessTime(new Date().toString());
+        auth1.setCreatedTime(new Date());
+        auth1.setExpiryTime(new Date());
+        auth1.setRefreshToken(new Token());
+        auth.getRefreshToken().setValue("REF-TOKEN-1");
+
+        auth1.setShortLivedToken(new Token());
+        auth.getRefreshToken().setValue("SHORT-TOKEN");
+
+        auth1.setLastAccessTime(new Date());
         List<Authentication> lst= new ArrayList<>();
         lst.add(auth);
         lst.add(auth1);
