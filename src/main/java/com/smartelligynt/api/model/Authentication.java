@@ -1,13 +1,16 @@
 package com.smartelligynt.api.model;
 
+import java.util.Date;
+
 public class Authentication
 {
 	String appName;
-	String shortLivedToken;
-	String refreshToken;
-	String createdTime;
-	String expiryTime;
-	String lastAccessTime;
+	Token shortLivedToken;
+	Token refreshToken;
+	Date createdTime;
+	// TODO not needed anymore, validity moved to token data type
+	Date expiryTime;
+	Date lastAccessTime;
 	String appUserId;
 	
 	public String getAppName() {
@@ -16,34 +19,34 @@ public class Authentication
 	public void setAppName(String appName) {
 		this.appName = appName;
 	}
-	public String getShortLivedToken() {
+	public Token getShortLivedToken() {
 		return shortLivedToken;
 	}
-	public void setShortLivedToken(String shortLivedToken) {
+	public void setShortLivedToken(Token shortLivedToken) {
 		this.shortLivedToken = shortLivedToken;
 	}
-	public String getRefreshToken() {
+	public Token getRefreshToken() {
 		return refreshToken;
 	}
-	public void setRefreshToken(String refreshToken) {
+	public void setRefreshToken(Token refreshToken) {
 		this.refreshToken = refreshToken;
 	}
-	public String getCreatedTime() {
+	public Date getCreatedTime() {
 		return createdTime;
 	}
-	public void setCreatedTime(String createdTime) {
+	public void setCreatedTime(Date createdTime) {
 		this.createdTime = createdTime;
 	}
-	public String getExpiryTime() {
+	public Date getExpiryTime() {
 		return expiryTime;
 	}
-	public void setExpiryTime(String expiryTime) {
+	public void setExpiryTime(Date expiryTime) {
 		this.expiryTime = expiryTime;
 	}
-	public String getLastAccessTime() {
+	public Date getLastAccessTime() {
 		return lastAccessTime;
 	}
-	public void setLastAccessTime(String lastAccessTime) {
+	public void setLastAccessTime(Date lastAccessTime) {
 		this.lastAccessTime = lastAccessTime;
 	}
 	public String getAppUserId() {

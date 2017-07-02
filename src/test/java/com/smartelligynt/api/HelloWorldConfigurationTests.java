@@ -17,9 +17,6 @@ package com.smartelligynt.api;
 
 import static org.junit.Assert.assertEquals;
 
-import java.sql.Connection;
-import java.sql.DriverManager;
-import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashMap;
@@ -43,6 +40,7 @@ import com.smartelligynt.api.model.BaseResponse;
 import com.smartelligynt.api.model.Device;
 import com.smartelligynt.api.model.Event;
 import com.smartelligynt.api.model.Location;
+import com.smartelligynt.api.model.Token;
 import com.smartelligynt.api.model.User;
 
 @RunWith(SpringRunner.class)
@@ -76,19 +74,27 @@ public class HelloWorldConfigurationTests {
         Authentication auth = new Authentication();
         auth.setAppName("wink");
         auth.setAppUserId("winkuserid");
-        auth.setCreatedTime(new Date().toString());
-        auth.setExpiryTime(new Date().toString());
-        auth.setRefreshToken("REF-TOKEN");
-        auth.setShortLivedToken("SHORT-TOKEN");
-        auth.setLastAccessTime(new Date().toString());
+        auth.setCreatedTime(new Date());
+        auth.setExpiryTime(new Date());
+        auth.setRefreshToken(new Token());
+        auth.getRefreshToken().setValue("REF-TOKEN-1");
+        auth.getRefreshToken().setExpiresOn(new Date());
+        auth.setShortLivedToken(new Token());
+        auth.getShortLivedToken().setValue("SHORT-TOKEN");
+        auth.getShortLivedToken().setExpiresOn(new Date());
+        auth.setLastAccessTime(new Date());
         Authentication auth1 = new Authentication();
         auth1.setAppName("wink1");
         auth1.setAppUserId("winkuserid1");
-        auth1.setCreatedTime(new Date().toString());
-        auth1.setExpiryTime(new Date().toString());
-        auth1.setRefreshToken("REF-TOKEN-1");
-        auth1.setShortLivedToken("SHORT-TOKE-1");
-        auth1.setLastAccessTime(new Date().toString());
+        auth1.setCreatedTime(new Date());
+        auth1.setExpiryTime(new Date());
+        auth.setRefreshToken(new Token());
+        auth.getRefreshToken().setValue("REF-TOKEN-1");
+        auth.getRefreshToken().setExpiresOn(new Date());
+        auth.setShortLivedToken(new Token());
+        auth.getShortLivedToken().setValue("SHORT-TOKEN");
+        auth.getShortLivedToken().setExpiresOn(new Date());
+        auth1.setLastAccessTime(new Date());
         List<Authentication> lst= new ArrayList<>();
         lst.add(auth);
         lst.add(auth1);
@@ -98,9 +104,15 @@ public class HelloWorldConfigurationTests {
         
         ResponseEntity<BaseResponse> entity = 
         		restTemplate.postForEntity("http://localhost:" + this.port + "/api/users/b32f6cec-454c-44e1-971c-f4a38eb5ce9f", user, BaseResponse.class);
-        
         System.out.println("user saved " + entity.getBody().getId());
         assertEquals(HttpStatus.OK, entity.getStatusCode());
+        
+        ResponseEntity<User> responseEntity = restTemplate.getForEntity("http://localhost:" + this.port + "/api/users/b32f6cec-454c-44e1-971c-f4a38eb5ce9f", User.class);
+        System.out.println("user retreived " + entity.getBody().getId());
+        assertEquals(HttpStatus.OK, responseEntity.getStatusCode());
+        assertEquals(user.getEmailId(), responseEntity.getBody().getEmailId());
+        assertEquals(user.getName(), responseEntity.getBody().getName());
+        assertEquals(user.getUserId(), responseEntity.getBody().getUserId());
     }
     
     
@@ -174,19 +186,27 @@ public class HelloWorldConfigurationTests {
         Authentication auth = new Authentication();
         auth.setAppName("wink");
         auth.setAppUserId("winkuserid");
-        auth.setCreatedTime(new Date().toString());
-        auth.setExpiryTime(new Date().toString());
-        auth.setRefreshToken("REF-TOKEN");
-        auth.setShortLivedToken("SHORT-TOKEN");
-        auth.setLastAccessTime(new Date().toString());
+        auth.setCreatedTime(new Date());
+        auth.setExpiryTime(new Date());
+        auth.setRefreshToken(new Token());
+        auth.getRefreshToken().setValue("REF-TOKEN-1");
+        auth.getRefreshToken().setExpiresOn(new Date());
+        auth.setShortLivedToken(new Token());
+        auth.getShortLivedToken().setValue("SHORT-TOKEN");
+        auth.getShortLivedToken().setExpiresOn(new Date());
+        auth.setLastAccessTime(new Date());
         Authentication auth1 = new Authentication();
         auth1.setAppName("wink1");
         auth1.setAppUserId("winkuserid1");
-        auth1.setCreatedTime(new Date().toString());
-        auth1.setExpiryTime(new Date().toString());
-        auth1.setRefreshToken("REF-TOKEN-1");
-        auth1.setShortLivedToken("SHORT-TOKE-1");
-        auth1.setLastAccessTime(new Date().toString());
+        auth1.setCreatedTime(new Date());
+        auth1.setExpiryTime(new Date());
+        auth.setRefreshToken(new Token());
+        auth.getRefreshToken().setValue("REF-TOKEN-1");
+        auth.getRefreshToken().setExpiresOn(new Date());
+        auth.setShortLivedToken(new Token());
+        auth.getShortLivedToken().setValue("SHORT-TOKEN");
+        auth.getShortLivedToken().setExpiresOn(new Date());
+        auth1.setLastAccessTime(new Date());
         List<Authentication> lst= new ArrayList<>();
         lst.add(auth);
         lst.add(auth1);
