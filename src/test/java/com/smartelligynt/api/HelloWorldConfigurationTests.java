@@ -149,6 +149,18 @@ public class HelloWorldConfigurationTests {
     }
     
     
+    @Test
+    public void testGetDevice() throws Exception {
+      
+        
+        ResponseEntity<Device> entity = 
+        		restTemplate.getForEntity("http://localhost:" + this.port + "/api/users/b32f6cec-454c-44e1-971c-f4a38eb5ce9f/devices/aa7c1b06-b243-4f6a-9820-f2e0c12be170", Device.class);
+        
+        System.out.println("device2 saved " + entity.getBody().getName());
+        assertEquals(HttpStatus.OK, entity.getStatusCode());
+    }
+    
+    
     
     @Test
     public void testUser() throws Exception {
@@ -187,6 +199,53 @@ public class HelloWorldConfigurationTests {
         
         System.out.println("user saved " + entity.getBody().getId());
         assertEquals(HttpStatus.OK, entity.getStatusCode());
+    }
+    
+    
+    @Test
+    public void testGetUser() throws Exception {
+        User user = new User();
+        user.setName("a user name");
+        user.setEmailId("myemail@gmail.com");
+        Location loc = new Location();
+        loc.setLongitude("-1.4566");
+        loc.setLatitude("0.64885");
+        user.setLocation(loc);
+        Authentication auth = new Authentication();
+        auth.setAppName("sthing");
+        auth.setAppUserId("sthingid");
+        auth.setCreatedTime(new Date().toString());
+        auth.setExpiryTime(new Date().toString());
+        auth.setRefreshToken("REF-TOKEN");
+        auth.setShortLivedToken("SHORT-TOKEN");
+        auth.setLastAccessTime(new Date().toString());
+        Authentication auth1 = new Authentication();
+        auth1.setAppName("sthing");
+        auth1.setAppUserId("sthingid");
+        auth1.setCreatedTime(new Date().toString());
+        auth1.setExpiryTime(new Date().toString());
+        auth1.setRefreshToken("REF-TOKEN-1");
+        auth1.setShortLivedToken("SHORT-TOKE-1");
+        auth1.setLastAccessTime(new Date().toString());
+        List<Authentication> lst= new ArrayList<>();
+        lst.add(auth);
+        lst.add(auth1);
+        Map<String, List<Authentication>> mp = new HashMap<>();
+        mp.put("sthing", lst);
+        user.setToken(mp);
+        
+        ResponseEntity<BaseResponse> entity = 
+        		restTemplate.postForEntity("http://localhost:" + this.port + "/api/users", user, BaseResponse.class);
+        
+        System.out.println("user saved in getUser test" + entity.getBody().getId());
+        System.out.println("Now retrive saved user " + entity.getBody().getId());
+        
+        System.out.println("http://localhost:" + this.port + "/api/users/" + entity.getBody().getId());
+        ResponseEntity<User> userResponse = 
+        		restTemplate.getForEntity("http://localhost:" + this.port + "/api/users/" + entity.getBody().getId(),  User.class);
+        
+        assertEquals(HttpStatus.OK, userResponse.getStatusCode());
+        assertEquals(entity.getBody().getId(), userResponse.getBody().getUserId());
     }
     
    

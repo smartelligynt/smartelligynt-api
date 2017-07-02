@@ -30,6 +30,7 @@ import com.smartelligynt.api.model.User;
 @RestController
 @RequestMapping (value="/api")
 
+//TODO : handle null response from Storage everywhere
 public class EventReciever {
 
     private Storage esStorage = new ESStorage();
@@ -74,6 +75,13 @@ public class EventReciever {
     	response.setId(val.get_id());
         return response;
     }
+
+    
+    @RequestMapping(value="/users/{userId}/devices/{deviceId}", method = RequestMethod.GET)
+    public Device getDevices(@PathVariable String userId, @PathVariable String deviceId) {
+    	Device val = esStorage.getDevice(userId, deviceId);
+        return val;
+    }
     
     @RequestMapping(value="/users", method = RequestMethod.POST)
 	public BaseResponse users(@RequestBody User user) throws IOException {
@@ -106,6 +114,14 @@ public class EventReciever {
 //        return val;
 //    }
 
+    @RequestMapping(value="/users/{userId}", method = RequestMethod.GET)
+    public User getUsers(@PathVariable String userId) {
+    	User val = esStorage.getUserById(userId);
+    	//BaseResponse response = new BaseResponse();
+    	//response.setId(val.get_id());
+        return val;
+    }
+    
     public static void main(String[] args) {
         SpringApplication.run(EventReciever.class, args);
     }

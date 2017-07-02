@@ -66,5 +66,38 @@ public class ESStorage implements Storage {
 		}
 		return null;
 	}
+	
+	@Override
+	public User getUserById(String userId) {
+		
+		if (userId == null || userId.isEmpty())
+		{
+			return null;
+
+		}
+		
+		ResponseEntity<User> entiry = restTemplate.getForEntity(BASE_ES_URL + USER_URL  + userId + "/_source",  User.class);
+		
+		if (entiry.getStatusCode().is2xxSuccessful()) {
+			return entiry.getBody();
+		}
+		return null;
+	}
+
+	@Override
+	public Device getDevice(String userId, String deviceId) {
+		if (userId == null || userId.isEmpty() || deviceId == null || deviceId.isEmpty())
+		{
+			return null;
+
+		}
+		
+		ResponseEntity<Device> entiry = restTemplate.getForEntity(BASE_ES_URL + DEVICE_URL  + userId + "/" + deviceId + "/_source",  Device.class);
+		
+		if (entiry.getStatusCode().is2xxSuccessful()) {
+			return entiry.getBody();
+		}
+		return null;
+	}
 
 }
