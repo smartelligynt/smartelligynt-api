@@ -1,8 +1,9 @@
-package com.smartelligynt.api;
+package com.smartelligynt.persist;
 
-import com.smartelligynt.api.model.Device;
-import com.smartelligynt.api.model.Event;
-import com.smartelligynt.api.model.User;
+
+import com.smartelligynt.client.api.model.Device;
+import com.smartelligynt.client.api.model.Event;
+import com.smartelligynt.client.api.model.User;
 
 public interface Storage {
 	

@@ -35,13 +35,13 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.test.annotation.DirtiesContext;
 import org.springframework.test.context.junit4.SpringRunner;
 
-import com.smartelligynt.api.model.Authentication;
-import com.smartelligynt.api.model.BaseResponse;
-import com.smartelligynt.api.model.Device;
-import com.smartelligynt.api.model.Event;
-import com.smartelligynt.api.model.Location;
-import com.smartelligynt.api.model.Token;
-import com.smartelligynt.api.model.User;
+import com.smartelligynt.client.api.model.Authentication;
+import com.smartelligynt.client.api.model.BaseResponse;
+import com.smartelligynt.client.api.model.Device;
+import com.smartelligynt.client.api.model.Event;
+import com.smartelligynt.client.api.model.Location;
+import com.smartelligynt.client.api.model.Token;
+import com.smartelligynt.client.api.model.User;
 
 @RunWith(SpringRunner.class)
 @SpringBootTest(webEnvironment = WebEnvironment.RANDOM_PORT)

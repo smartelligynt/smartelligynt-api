@@ -1,4 +1,4 @@
-package com.smartelligynt.api;
+package com.smartelligynt.persist;
 
 /**
  * 

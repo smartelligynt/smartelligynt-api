@@ -1,6 +1,6 @@
-package com.smartelligynt.api;
+package com.smartelligynt.persist;
 
-import com.smartelligynt.api.model.User;
+import com.smartelligynt.client.api.model.User;
 
 /**
  * 

@@ -1,19 +1,21 @@
-package com.smartelligynt.api;
+package com.smartelligynt.persist;
 
 import java.util.UUID;
 
-import javax.annotation.Resource;
+
+//import javax.annotation.Resource;
 
 import org.springframework.http.ResponseEntity;
+import org.springframework.stereotype.Component;
 import org.springframework.web.client.RestTemplate;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.SerializationFeature;
-import com.smartelligynt.api.model.Device;
-import com.smartelligynt.api.model.Event;
-import com.smartelligynt.api.model.User;
+import com.smartelligynt.client.api.model.Device;
+import com.smartelligynt.client.api.model.Event;
+import com.smartelligynt.client.api.model.User;
 
-@Resource(name="esstorage")
+@Component
 public class ESStorage implements Storage {
 
 	
@@ -24,14 +26,14 @@ public class ESStorage implements Storage {
 	private String DEVICE_URL = "devices/";
 	private String USER_URL = "users/user/";
 
-	public StorageResponse save(ProcessedEvent event) {
-		// TODO Auto-generated method stub
-		ResponseEntity<StorageResponse> entiry = restTemplate.postForEntity(BASE_ES_URL + EVENT_URL, event, StorageResponse.class);
-		if (entiry.getStatusCode().is2xxSuccessful()) {
-			return entiry.getBody();
-		}
-		return null;
-	}
+//	public StorageResponse save(ProcessedEvent event) {
+//		// TODO Auto-generated method stub
+//		ResponseEntity<StorageResponse> entiry = restTemplate.postForEntity(BASE_ES_URL + EVENT_URL, event, StorageResponse.class);
+//		if (entiry.getStatusCode().is2xxSuccessful()) {
+//			return entiry.getBody();
+//		}
+//		return null;
+//	}
 
 	@Override
 	public StorageResponse saveEvent(String deviceId, Event event) {
