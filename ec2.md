@@ -5,6 +5,9 @@ ssh -o "StrictHostKeyChecking no" -i "aws-ec2.pem" ec2-user@52.26.71.168
 docker pull smartelligynt/smartelligynt-app
 
 docker run -d -p 8082:3000 smartelligynt/smartelligynt-app
+docker run --rm -it -p 8083:8080 smartelligynt/smartwink-app
+docker run -d -p 8081:8080 smartelligynt/smartelligynt-app
+
 
 cd /etc/nginx
 
